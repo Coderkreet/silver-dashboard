@@ -79,3 +79,43 @@ export async function createLevel() {
   });
   return response?.data;
 }
+
+export async function getPlans() {
+  const response = await axios.get(`${userURL}/user/get-plans`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    withCredentials: true,
+  });
+  return response?.data;
+}
+
+export const placeOrder = async (data) => {
+  try {
+    const response = await axios.post(`${userURL}/user/create-orders`, data,
+{
+       headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+    );
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const verifyPayment = async (paymentData) => {
+  try {
+    const response = await axios.post(`${userURL}/user/distribute-mlm-commission`, paymentData,
+{
+       headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+    );
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};

@@ -29,15 +29,17 @@ const UserHome = () => {
 
   const referCode = `${location}/register?referral=${sponsorId}`;
 
-  // console.log(userInfo)
+
+
+  console.log(userInfo)
 
   // const [loading, setLoading] = useState(false);
 
   const userData = {
-    user_id: userInfo?.user?._id,
+    user_id: userInfo?.data?.sponsorId,
     // subscription: "Premium",
-    date_of_activation: formatDate(userInfo?.user?.createdAt) || "NA",
-    renewal_status: userInfo?.user?.isActive ? "Active" : "Inactive",
+    date_of_activation: formatDate(userInfo?.data?.createdAt) || "NA",
+    status: userInfo?.data?.hasActivePlan ? "Active" : "Inactive",
   };
 
   const handleCopy = (text, setCopiedState) => {
@@ -89,7 +91,7 @@ const UserHome = () => {
               <h5 className="heading">
                 Welcome{" "}
                 <span className="text-capitalize">
-                  {userInfo?.data?.name || "User"}
+                  {userInfo?.name || "User"}
                 </span>
                 !
               </h5>
@@ -165,7 +167,7 @@ const UserHome = () => {
             </div>
           </div> */}
          
-          <div className="income-card ss-card">
+          {/* <div className="income-card ss-card">
             <div className="left">
               <h5>Direct Income</h5>
               <p>${userInfo?.spinIncome?.toFixed(2) || "0"}</p>
@@ -176,8 +178,8 @@ const UserHome = () => {
                 alt=""
               />
             </div>
-          </div>
-          <div className="income-card ss-card">
+          </div> */}
+          {/* <div className="income-card ss-card">
             <div className="left">
               <h5>Referral Income</h5>
               <p>${userInfo?.totalReferralIncome?.toFixed(2) || "0"}</p>
@@ -188,8 +190,8 @@ const UserHome = () => {
                 alt=""
               />
             </div>
-          </div>
-          <div className="income-card ss-card">
+          </div> */}
+          {/* <div className="income-card ss-card">
             <div className="left">
               <h5>ROI Income</h5>
               <p>${userInfo?.totalRoyaltyIncome?.toFixed(2) || "0"}</p>
@@ -202,8 +204,8 @@ const UserHome = () => {
                 alt=""
               />
             </div>
-          </div>
-          <div className="income-card ss-card">
+          </div> */}
+          {/* <div className="income-card ss-card">
             <div className="left">
               <h5>Level Income</h5>
               <p>${userInfo?.totalLevelIncome?.toFixed(2) || "0"}</p>
@@ -214,8 +216,8 @@ const UserHome = () => {
                 alt=""
               />
             </div>
-          </div>
-          <div className="income-card ss-card">
+          </div> */}
+          {/* <div className="income-card ss-card">
             <div className="left">
               <h5>Matching Income</h5>
               <p>${userInfo?.maxPayout?.toFixed(2) || "0"}</p>
@@ -226,7 +228,7 @@ const UserHome = () => {
                 alt=""
               />
             </div>
-          </div>
+          </div> */}
          
           <div className="income-card ss-card">
             <div className="left">
@@ -240,7 +242,7 @@ const UserHome = () => {
               />
             </div>
           </div>
-          <div className="income-card ss-card">
+          {/* <div className="income-card ss-card">
             <div className="left">
               <h5>BB TOKEN</h5>
               <p>${userInfo?.teamInvestment?.toFixed(2) || "0"}</p>
@@ -251,9 +253,9 @@ const UserHome = () => {
                 alt=""
               />
             </div>
-          </div>
+          </div> */}
         </div>
-        <Achievement value={userInfo?.user?.levelType || 0} directUser= {userInfo?.user?.partners?.filter(partner => partner?.isActive)?.length || 0} totalUser= {userInfo?.totalActiveUserLength} />
+        {/* <Achievement value={userInfo?.user?.levelType || 0} directUser= {userInfo?.user?.partners?.filter(partner => partner?.isActive)?.length || 0} totalUser= {userInfo?.totalActiveUserLength} /> */}
 
         {/* details */}
         <div className="detail-wrapper">
@@ -295,7 +297,7 @@ const UserHome = () => {
           <div className="head">
             <h5 className="cardHeading">Direct Referral History</h5>
           </div>
-          <SSDataTable data={userInfo?.user?.partners} />
+          <SSDataTable data={userInfo?.data} />
         </div>
         <PaymentAcceptModal
           show={showPaymentModal}

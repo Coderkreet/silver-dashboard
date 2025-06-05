@@ -4,7 +4,7 @@ const CustomPlanCard = ({ data, sureConfirmation }) => {
   return (
     <>
       <div className="MatrimonyCustomOfferCard ss-card">
-        {data?.popular ? (
+        {data?.name ? (
           <div className="popularTag fill">Popular Plan</div>
         ) : (
           <div className="popularTag"> &nbsp;</div>
@@ -12,11 +12,11 @@ const CustomPlanCard = ({ data, sureConfirmation }) => {
 
         <div className="center">
           <div className="planValues">
-            <h6 className="planName">{data?.packageName}</h6>
+            <h6 className="planName">{data?.name}</h6>
             <h6 className="price">${data?.amount}</h6>
           </div>
 
-          <Button2 onClick={() => sureConfirmation(data)} name="Choose Plan" />
+          <Button2 onClick={() => sureConfirmation(data)} name="Buy Plan" />
         </div>
       </div>
     </>
