@@ -28,9 +28,27 @@ export async function approveComplainRequest(id) {
   return response;
 }
 
-export async function Addplans(data) {
-  const response = await axios.post(
-    `${apiURL}/create-plan` , data
+export async function GetPlans() {
+  const response = await axios.get(
+    `${apiURL}/get-plans` ,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      withCredentials: true,
+    }
+  );
+  return response;
+}
+export async function getPlanHistory() {
+  const response = await axios.get(
+    `${apiURL}/get-plan-history`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      withCredentials: true,
+    }
   );
   return response;
 }
@@ -62,12 +80,25 @@ export async function rejectComplainRequest(id) {
   return response;
 }
 
+export async function getIncomeHistoryAdmin() {
+  const response = await axios.get(
+    `${apiURL}/get-income-history`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      withCredentials: true,
+    }
+  );
+  return response?.data;
+}
+
 
 export async function getAllUserList() {
   const response = await axios.get(`${apiURL}/get-users`, {
     headers: {
       Authorization: `Bearer ${token}`,
-    },
+    }, 
     withCredentials: true,
   });
   return response?.data;

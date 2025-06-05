@@ -72,3 +72,16 @@ export async function resetPasswordApi(payload) {
 }
 
 
+export async function requestLoan(payload) {
+  const token = localStorage.getItem("token");
+
+  const response = await axios.post(`${apiURL}/user/request-loan`, payload, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    withCredentials: true,
+  });
+  return response?.data;
+}
+
+

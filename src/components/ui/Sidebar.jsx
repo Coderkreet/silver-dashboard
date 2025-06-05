@@ -76,12 +76,14 @@ const Sidebar = () => {
     >
       <nav className="nav">
         <div>
-          <Link to={AuthenticatedRoutes.USER_DASHBOARD} className="nav-logo">
+          <Link to={AuthenticatedRoutes.USER_DASHBOARD} className="nav-logo d-flex justify-content-center flex-column align-items-center">
             <img
               src={MainContent.appLogoClr}
+           
               alt="logo"
               className="nav-logo-icon"
             />
+            <div style={{fontSize:"1.2rem", width: "max-content"}} className=""><span className="text-black">Excellent</span>-Finserv</div>
           </Link>
 
           <div className="nav-toggle" id="nav-toggle" onClick={toggleSidebar}>

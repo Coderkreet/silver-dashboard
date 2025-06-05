@@ -170,14 +170,14 @@ const AuthRegisterForm = () => {
               labelName="Confirm Password"
               error={errors.confirmPassword}
             />
-            {search?.split("=")[1] && (
+            {/* {search?.split("=")[1] && (
               <TextInput
                 value={search?.split("=")[1]}
                 placeholder="Refer Code"
                 labelName="Referral Code"
                 disabled={"disabled"}
               />
-            )}
+            )} */}
           </div>
 
           <div className="btns">

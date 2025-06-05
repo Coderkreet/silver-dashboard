@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import PageLoader from "../../components/ui/PageLoader";
 import { useSelector } from "react-redux";
 import { DataTable } from "primereact/datatable";
-import { getAllUsers } from "../../api/account-api";
+// import { getAllUsers } from "../../api/account-api";
 import { Column } from "primereact/column";
 
 const AdminDashboard = () => {
@@ -11,20 +11,21 @@ const AdminDashboard = () => {
   const [globalFilter, setGlobalFilter] = useState(null);
   const [totalUsers, setTotalUsers] = useState([]);
   console.log(totalUsers);
-  const fetchWithdrawalHistory = async () => {
-    try {
-      setLoading(true);
-      const response = await getAllUsers();
-      setTotalUsers(response?.data);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-  useEffect(() => {
-    fetchWithdrawalHistory();
-  }, []);
+  // const fetchWithdrawalHistory = async () => {
+  //   try {
+  //     setLoading(true);
+  //     const response = await getAllUsers();
+  //     setTotalUsers(response?.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+  // useEffect(() => {
+  //   fetchWithdrawalHistory();
+  // }, []);
+  
 
   const [totalValues, setTotalValues] = useState({
     totalUser: 0,

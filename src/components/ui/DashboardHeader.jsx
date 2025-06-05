@@ -49,17 +49,17 @@ const DashboardHeader = ({ name }) => {
     } else if (!userInfo && role === "Admin") {
       const fetchUserInfo = async () => {
         try {
-          setLoading(true);
-          const user = await getAdminInfo();
-          dispatch(setUserInfo(user));
+          // setLoading(true);
+          // const user = await getAdminInfo();
+          // dispatch(setUserInfo(user));
         } catch (error) {
-          console.error("Error fetching user info:", error);
+          // console.error("Error fetching user info:", error);
 
-          SwalError.fire({
-            title: "Error",
-            text: error?.response?.data?.message || "Error fetching user info",
-            confirmButtonText: "OK",
-          });
+          // SwalError.fire({
+          //   title: "Error",
+          //   text: error?.response?.data?.message || "Error fetching user info",
+          //   confirmButtonText: "OK",
+          // });
 
           // setTimeout(() => {
           //   localStorage.clear();
