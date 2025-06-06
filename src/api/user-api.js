@@ -127,3 +127,16 @@ export async function getLoanHistory() {
 }
 
 
+export async function GetPlansUser() {
+  const token = localStorage.getItem("token");
+  const response = await axios.get(
+    `${apiURL}/user/get-plans` ,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      withCredentials: true,
+    }
+  );
+  return response;
+}

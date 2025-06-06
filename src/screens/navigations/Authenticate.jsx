@@ -41,6 +41,7 @@ import IncomeHistory from "../admin/IncomeHistory";
 import LoanStatus from "../admin/LoanStatus";
 import UpdateLoan from "../admin/UpdateLoan";
 import LoanRequestForm from "../user/income-pages/LoanRequestForm";
+import OurPlanUser from "../user/OurPlanUser";
 const Authenticate = () => {
   const role = localStorage.getItem("role");
   return (
@@ -210,6 +211,15 @@ const Authenticate = () => {
             <Route
               path={AuthenticatedRoutes.USER_HOME}
               element={<UserMain />}
+            />
+               <Route
+              path={AuthenticatedRoutes.OUR_PLANS}
+              element={
+                <DashboardMain
+                  inner={<OurPlanUser />}
+                  name="Our Plan"
+                />
+              }
             />
          
             <Route
