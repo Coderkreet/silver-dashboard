@@ -36,6 +36,11 @@ import ComplainTicketList from "../admin/ComplainTicketList";
 import AllUsersList from "../admin/AllUsersList";
 import AddPlansForm from "../admin/AddPlansForm";
 import EmptyData from "../admin/EmptyData";
+import OurPlans from "../admin/OurPlans";
+import IncomeHistory from "../admin/IncomeHistory";
+import LoanStatus from "../admin/LoanStatus";
+import UpdateLoan from "../admin/UpdateLoan";
+import LoanRequestForm from "../user/income-pages/LoanRequestForm";
 const Authenticate = () => {
   const role = localStorage.getItem("role");
   return (
@@ -136,6 +141,16 @@ const Authenticate = () => {
                 />
               }
             />
+
+              <Route
+              path={AuthenticatedRoutes.OUR_PLANS_ADMIN}
+              element={
+                <DashboardMain
+                  inner={<OurPlans />}
+                  name="Our Plan"
+                />
+              }
+            />
             <Route
               path={AuthenticatedRoutes.PENDING_USERS}
               element={
@@ -172,7 +187,23 @@ const Authenticate = () => {
                 />
               }
             />
-           
+
+<Route
+              path={AuthenticatedRoutes.USER_PROFILE}
+              element={<DashboardMain inner={<ProfilePage />} name="Profile" />}
+            />
+           <Route
+              path={AuthenticatedRoutes.INCOME_HISTORY}
+              element={<DashboardMain inner={<IncomeHistory />} name="INCOME_History" />}
+            />
+              <Route
+              path={AuthenticatedRoutes.LOAN_STATUS}
+              element={<DashboardMain inner={<LoanStatus />} name="LOAN_STATUS" />}
+            />
+               <Route
+              path={AuthenticatedRoutes.UPDATE_LOAN_STATUS}
+              element={<DashboardMain inner={<UpdateLoan />} name="UPDATE_LOAN_STATUS" />}
+            />
           </>
         ) : (
           <>
@@ -180,6 +211,7 @@ const Authenticate = () => {
               path={AuthenticatedRoutes.USER_HOME}
               element={<UserMain />}
             />
+         
             <Route
               path={AuthenticatedRoutes.USER_DASHBOARD}
               element={<DashboardMain inner={<UserHome />} name="Dashboard" />}
@@ -193,6 +225,13 @@ const Authenticate = () => {
               path={AuthenticatedRoutes.BANK_DETAILS}
               element={
                 <DashboardMain inner={<BankDetails />} name="Bank Detail" />
+              }
+            />
+
+            <Route
+              path={AuthenticatedRoutes.LOAN_FORM}
+              element={
+                <DashboardMain inner={<LoanRequestForm />} name=" Loan Form" />
               }
             />
             <Route
@@ -275,15 +314,7 @@ const Authenticate = () => {
                 />
               }
             />
-            <Route
-              path={AuthenticatedRoutes.OUR_PLANS}
-              element={
-                <DashboardMain
-                  inner={<OverallUserCustomPlan />}
-                  name="Our Plan"
-                />
-              }
-            />
+          
 
             <Route
               path={AuthenticatedRoutes.FUND_REQUEST}

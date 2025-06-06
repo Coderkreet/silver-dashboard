@@ -13,7 +13,6 @@ import {
 import Swal from "sweetalert2";
 
 const AllUsersList = () => {
-  const [globalFilter, setGlobalFilter] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showDetail, setShowDetail] = useState(false);
   const [UserList, setUserList] = useState([]);
@@ -62,7 +61,7 @@ const AllUsersList = () => {
     try {
       setLoading(true);
       const response = await getAllUserList();
-      setUserList(response?.users);
+      setUserList(response?.data || []);
     } catch (error) {
       console.log(error);
       SwalError.fire({
@@ -81,46 +80,6 @@ const AllUsersList = () => {
 
   const serialNumberTemplate = (rowData, { rowIndex }) => {
     return rowIndex + 1;
-  };
-
-  const spinIncomeTemplate = (rowData) => {
-    return <span className="p-2">{rowData?.spinIncome?.toFixed(2)}</span>;
-  };
-
-  const totalIncomeTemplate = (rowData) => {
-    return <span className="p-2">{rowData?.totalIncome?.toFixed(2)}</span>;
-  };
-
-  const currentIncomeTemplate = (rowData) => {
-    return <span className="p-2">{rowData?.currentIncome?.toFixed(2)}</span>;
-  };
-
-  const levelIncomeTemplate = (rowData) => {
-    return <span className="p-2">{rowData?.levelIncome?.toFixed(2)}</span>;
-  };
-
-  const royaltyIncomeTemplate = (rowData) => {
-    return <span className="p-2">{rowData?.royaltyIncome?.toFixed(2)}</span>;
-  };
-
-  const referralIncomeTemplate = (rowData) => {
-    return <span className="p-2">{rowData?.ReferralIncome?.toFixed(2)}</span>;
-  };
-
-  const selfIncomeTemplate = (rowData) => {
-    return <span className="p-2">{rowData?.selfIncome?.toFixed(2)}</span>;
-  };
-
-  const totalInvestmentIncomeTemplate = (rowData) => {
-    return <span className="p-2">{rowData?.investment?.toFixed(2)}</span>;
-  };
-
-  const currentAmountWithdrawalTemplate = (rowData) => {
-    return (
-      <span className="p-2">
-        {(rowData?.totalIncome - rowData?.currentIncome)?.toFixed(2)}
-      </span>
-    );
   };
 
   const actionTemplate = (rowData) => {
@@ -143,6 +102,7 @@ const AllUsersList = () => {
       </div>
     );
   };
+
   const deleteUserHandler = async (data) => {
     Swal.fire({
       title: "Are you sure?",
@@ -180,6 +140,18 @@ const AllUsersList = () => {
     return new Date(rowData.createdAt).toLocaleString();
   };
 
+  const walletTemplate = (rowData) => {
+    return <span className="p-2">{rowData?.wallet ? Number(rowData.wallet).toFixed(2) : '0.00'}</span>;
+  };
+
+  const investmentTemplate = (rowData) => {
+    return <span className="p-2">{rowData?.investmentAmount ? Number(rowData.investmentAmount).toFixed(2) : '0.00'}</span>;
+  };
+
+  const earningsTemplate = (rowData) => {
+    return <span className="p-2">{rowData?.earnings ? Number(rowData.earnings).toFixed(2) : '0.00'}</span>;
+  };
+
   return (
     <>
       {loading && <PageLoader />}
@@ -200,82 +172,23 @@ const AllUsersList = () => {
             rows={10}
             rowsPerPageOptions={[5, 10, 25, 50, 100, 200, 500, 1000]}
             filterDisplay="row"
-            globalFilter={globalFilter}
           >
             <Column
-              style={{ width: "10%" }}
+              style={{ width: "5%" }}
               body={serialNumberTemplate}
               header="S.No"
             />
-            {/* <Column field="_id" header="ID" filter sortable /> */}
-            <Column sortable field="name" header="Name"  />
-            <Column sortable field="email" header="Email"  />
-            <Column sortable field="sponsorId" header="Sponsor Id"  />
-            <Column sortable field="referralCode" header="Referred By"  />
-            {/* <Column
-              body={totalInvestmentIncomeTemplate}
-              header="Total Investment"
-              filter
-              sortable
-              field="investment"
-            />
-            <Column
-              body={totalIncomeTemplate}
-              header="Total Income"
-              filter
-              sortable
-              field="totalIncome"
-            />
-            <Column
-              body={currentIncomeTemplate}
-              header="Wallet Balance"
-              filter
-              sortable
-              field="currentIncome"
-            /> */}
-            {/* <Column
-              body={currentAmountWithdrawalTemplate}
-              header="Amount Withdrawal"
-              filter
-              sortable
-              field="currentIncome"
-            />
-            <Column
-              body={levelIncomeTemplate}
-              header="Level Income"
-              filter
-              sortable
-              field="levelIncome"
-            />
-            <Column
-              body={royaltyIncomeTemplate}
-              header="Royalty Income"
-              filter
-              sortable
-              field="royaltyIncome"
-            />
-            <Column
-              body={referralIncomeTemplate}
-              header="Referral Income"
-              filter
-              sortable
-              field="ReferralIncome"
-            />
-            <Column
-              body={selfIncomeTemplate}
-              header="Self Income"
-              filter
-              sortable
-              field="selfIncome"
-            />
-            <Column
-              body={spinIncomeTemplate}
-              header="Spin Income"
-              filter
-              sortable
-              field="spinIncome"
-            /> */}
-            <Column sortable field="createdAt" body={dateTimeTemplate} header="Join Date" />
+            <Column sortable field="name" header="Name" />
+            <Column sortable field="email" header="Email" />
+            <Column sortable field="sponsorId" header="Sponsor ID" />
+            <Column sortable field="referralCode" header="Referral Code" />
+            <Column body={walletTemplate} header="Wallet Balance" sortable />
+            <Column body={investmentTemplate} header="Investment Amount" sortable />
+            <Column body={earningsTemplate} header="Earnings" sortable />
+            <Column field="isVerified" header="Verified" sortable />
+            <Column field="hasActivePlan" header="Active Plan" sortable />
+            <Column body={dateTimeTemplate} header="Join Date" sortable />
+            <Column body={actionTemplate} header="Actions" />
           </DataTable>
         </div>
       </div>

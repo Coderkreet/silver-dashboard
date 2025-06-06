@@ -38,7 +38,7 @@ export async function registerWithEmailApi(payload) {
   return response?.data;
 }
 export async function getUserInfo() {
-  const response = await axios.get(`${loginApiBaseAUrl}/user`, {
+  const response = await axios.get(`${loginApiBaseAUrl}/get-users `, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -49,6 +49,16 @@ export async function getUserInfo() {
 
 export async function getAdminInfo() {
   const response = await axios.get(`${loginApiBaseAUrl}/admin/admin`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    withCredentials: true,
+  });
+  return response?.data;
+}
+
+export async function getIncomeHistory() {
+  const response = await axios.get(`${userURL}/get-income-history`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

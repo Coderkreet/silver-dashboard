@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { WithdrawalReportContent } from "../../constants/content/dummy/WithdrawalReportContent";
 import PageLoader from "../../components/ui/PageLoader";
 import { getRejectPlans } from "../../api/payment-api";
+import { getPlanHistory } from "../../api/admin-api";
 
 const RejectPlanRequest = () => {
   const [globalFilter, setGlobalFilter] = useState(null);
@@ -13,6 +14,9 @@ const RejectPlanRequest = () => {
   const [data, setData] = useState([]);
 
   // getWithdrawalHistory
+  useEffect(()=>{
+    getPlanHistory();
+  },[])
 
   const fetchWithdrawalHistory = async () => {
     try {

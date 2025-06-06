@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { AddPlans } from '../../api/admin-api'
+import { SwalError, SwalSuccess } from '../../utils/custom-alert'
 
 const AddPlansForm = () => {
 
@@ -19,11 +20,43 @@ const AddPlansForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log('Form submitted:', formData)
-    await AddPlans(formData)
+    try {
+      const response = await AddPlans(formData)
+      console.log(response.status)
+      if (response?.status == 201) {
+        SwalSuccess.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: response?.message || 'Plan added successfully',
+          showConfirmButton: true,
+          confirmButtonText: 'OK'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Reset form after user clicks OK
+            setFormData({
+              name: '',
+              amount: '',
+              description: ''
+            })
+          }
+        })
+      } else {
+        SwalError.fire({
+          icon: 'error',
+          title: 'Error!',
+          text: response?.message || 'Failed to add plan'
+        })
+      }
+    } catch (error) {
+      console.error('Error adding plan:', error)
+      SwalError.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: error?.response?.data?.message || 'Something went wrong!'
+      })
+    }
   }
 
-  // ...existing code...
   return (                      
     <div className="container mt-4" style={{ minHeight: '100vh' }}>
       <div className="row justify-content-center">
@@ -170,7 +203,6 @@ const AddPlansForm = () => {
       </div>
     </div>
   )
-// ...existing code...
 }
 
 export default AddPlansForm

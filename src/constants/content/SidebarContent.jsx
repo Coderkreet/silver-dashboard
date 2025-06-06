@@ -2,10 +2,11 @@ import { FaUsers, FaUserTie } from "react-icons/fa";
 import { HiOutlineSquares2X2 } from "react-icons/hi2";
 import { LuPackageSearch } from "react-icons/lu";
 import { AuthenticatedRoutes } from "../Routes";
-import { FaRegMoneyBill1, FaWallet } from "react-icons/fa6";
+import { FaMoneyBillTransfer, FaRegMoneyBill1, FaWallet } from "react-icons/fa6";
 import { MdOutlineAddCard } from "react-icons/md";
 import { BiSupport } from "react-icons/bi";
 import { MainContent } from "./MainContent";
+import { History } from "lucide-react";
 
 export const SidebarContent = {
   user: [
@@ -85,11 +86,11 @@ export const SidebarContent = {
           name: "Fund Transfer",
           link: AuthenticatedRoutes.FUND_TRANSFER,
         },
-        // {
-        //   id: "Fund Request History",
-        //   name: "Fund Request History",
-        //   link: AuthenticatedRoutes.FUND_REQUEST_HISTORY,
-        // },
+        {
+          id: "Loan Request Form",
+          name: " Loan Request Form",
+          link: AuthenticatedRoutes.LOAN_FORM,
+        },
         {
           id: "Fund Transfer History",
           name: "Fund Transfer History",
@@ -186,9 +187,9 @@ export const SidebarContent = {
           link: AuthenticatedRoutes.ADD_PLANS,
         },
         {
-          id: "Plan Status",
-          name: "Plan Status",
-          link: AuthenticatedRoutes.PENDING_USERS,
+          id: "Our Plans",
+          name: "Our Plans",
+          link: AuthenticatedRoutes.OUR_PLANS_ADMIN,
         },
         // {
         //   id: "Approved Plan Request",
@@ -226,9 +227,14 @@ export const SidebarContent = {
     },
     {
       id: "Withdrawal Request",
-      icon: <FaWallet />,
+      icon: <History />,
       name: "Withdrawal Request",
       options: [
+        {
+          id: "Income History",
+          name: "Income History",
+          link: AuthenticatedRoutes.INCOME_HISTORY,
+        },
         {
           id: "Pending Withdrawal Request",
           name: "Pending Withdrawal Request",
@@ -246,6 +252,25 @@ export const SidebarContent = {
         },
       ],
     },
+    {
+      id: "Loan",
+      icon: <FaMoneyBillTransfer />,
+      name: "Loan",
+      options: [
+        {
+          id: "Loan Status",
+          name: "Loan Status",
+          link: AuthenticatedRoutes.LOAN_STATUS,
+        },
+        {
+          id: "Update Loan Status",
+          name: "Update Loan Status", 
+          link: AuthenticatedRoutes.UPDATE_LOAN_STATUS,
+        }
+      ],
+    },
+
+
     {
       id: "Support",
       icon: <BiSupport />,
