@@ -17,43 +17,43 @@ export const SidebarContent = {
       link: AuthenticatedRoutes.USER_DASHBOARD,
     },
 
-    {
-      id: "Income Report",
-      icon: <LuPackageSearch />,
-      name: "Income Report",
-      options: [
-        {
-          id: "Self Income",
-          name: "Direct Income",
-          link: AuthenticatedRoutes.SELF_INCOME_REPORT,
-        },
-        {
-          id: "Referral Income",
-          name: "Referral Income",
-          link: AuthenticatedRoutes.REFERRAL_INCOME_REPORT,
-        },
-        // {
-        //   id: "Spin Income",
-        //   name: "Spin Income",
-        //   link: AuthenticatedRoutes.SPIN_INCOME_REPORT,
-        // },
-        {
-          id: "Royalty Income",
-          name: "ROI Income",
-          link: AuthenticatedRoutes.ROYALTY_INCOME_REPORT,
-        },
-        {
-          id: "Level Income",
-          name: "Level Income",
-          link: AuthenticatedRoutes.LEVEL_INCOME_REPORT,
-        },
-           {
-          id: "Matching Income",
-          name: "Matching Income",
-          link: AuthenticatedRoutes.MATCHING_INCOME_REPORT,
-        },
-      ],
-    },
+    // {
+    //   id: "Income Report",
+    //   icon: <LuPackageSearch />,
+    //   name: "Income Report",
+    //   options: [
+    //     {
+    //       id: "Self Income",
+    //       name: "Direct Income",
+    //       link: AuthenticatedRoutes.SELF_INCOME_REPORT,
+    //     },
+    //     {
+    //       id: "Referral Income",
+    //       name: "Referral Income",
+    //       link: AuthenticatedRoutes.REFERRAL_INCOME_REPORT,
+    //     },
+    //     // {
+    //     //   id: "Spin Income",
+    //     //   name: "Spin Income",
+    //     //   link: AuthenticatedRoutes.SPIN_INCOME_REPORT,
+    //     // },
+    //     {
+    //       id: "Royalty Income",
+    //       name: "ROI Income",
+    //       link: AuthenticatedRoutes.ROYALTY_INCOME_REPORT,
+    //     },
+    //     {
+    //       id: "Level Income",
+    //       name: "Level Income",
+    //       link: AuthenticatedRoutes.LEVEL_INCOME_REPORT,
+    //     },
+    //        {
+    //       id: "Matching Income",
+    //       name: "Matching Income",
+    //       link: AuthenticatedRoutes.MATCHING_INCOME_REPORT,
+    //     },
+    //   ],
+    // },
     {
       id: "Wallet",
       icon: <FaWallet />,
@@ -61,8 +61,8 @@ export const SidebarContent = {
       options: [
         {
           id: "Wallet",
-          name: "Wallet",
-          link: AuthenticatedRoutes.WALLET,
+          name: "Withdrawal Request",
+          link: AuthenticatedRoutes.WITHDRAWAL_REQUEST,
         },
         {
           id: "Withdrawal Report",
@@ -81,44 +81,33 @@ export const SidebarContent = {
         //   name: "Fund Request",
         //   link: AuthenticatedRoutes.FUND_REQUEST,
         // },
-        {
-          id: "Fund Transfer",
-          name: "Fund Transfer",
-          link: AuthenticatedRoutes.FUND_TRANSFER,
-        },
+        // {
+        //   id: "Fund Transfer",
+        //   name: "Fund Transfer",
+        //   link: AuthenticatedRoutes.FUND_TRANSFER,
+        // },
         {
           id: "Loan Request Form",
           name: " Loan Request Form",
           link: AuthenticatedRoutes.LOAN_FORM,
         },
         {
-          id: "Fund Transfer History",
-          name: "Fund Transfer History",
+          id: "Loan Request History",
+          name: "Loan Request History",
           link: AuthenticatedRoutes.FUND_TRANSFER_HISTORY,
         },
-        {
-          id: "Fund Recieve History",
-          name: "Fund Receive History",
-          link: AuthenticatedRoutes.FUND_RECEIVE_HISTORY,
-        },
+        // {
+        //   id: "Fund Recieve History",
+        //   name: "Fund Receive History",
+        //   link: AuthenticatedRoutes.FUND_RECEIVE_HISTORY,
+        // },
       ],
     },
     {
       id: "Our Team",
       icon: <FaUsers />,
       name: "Our Team",
-      options: [
-        {
-          id: "Direct",
-          name: "Direct",
-          link: AuthenticatedRoutes.TEAM_DIRECT,
-        },
-        {
-          id: "Tree",
-          name: "Tree",
-          link: AuthenticatedRoutes.TEAM_TREE,
-        },
-      ],
+      link: AuthenticatedRoutes.TEAM_DIRECT,
     },
     {
       id: "OurPlan",
@@ -133,8 +122,8 @@ export const SidebarContent = {
       options: [
         {
           id: "Support",
-          name: "Raise Ticket",
-          link: AuthenticatedRoutes.SUPPORT_RAISE_TICKET,
+          name: "Contact-Us",
+          link: AuthenticatedRoutes.CONTACT_US,
         },
         {
           id: "Support History",

@@ -6,7 +6,7 @@ const apiURL = backendConfig.base;
 export async function raiseSupportRequest(payload) {
   const token = localStorage.getItem("token"); // <-- Move here
 
-  const response = await axios.post(`${apiURL}/support/create`, payload, {
+  const response = await axios.post(`${apiURL}/user/contact-us`, payload, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -76,6 +76,48 @@ export async function requestLoan(payload) {
   const token = localStorage.getItem("token");
 
   const response = await axios.post(`${apiURL}/user/request-loan`, payload, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    withCredentials: true,
+  });
+  return response?.data;
+}
+
+export async function raiseWithdrawalRequest(payload) {
+  const token = localStorage.getItem("token");
+  console.log(token)
+  const response = await axios.post(
+    `${apiURL}/user/withdraw-request`,
+    payload,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      withCredentials: true,
+    }
+  );
+  return response?.data;
+}
+
+export async function getReferrals() {
+  const token = localStorage.getItem("token");
+
+  const response = await axios.get(`${apiURL}/user/get-referrals`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    withCredentials: true,
+  });
+  return response?.data;
+}
+
+
+
+export async function getLoanHistory() {
+  const token = localStorage.getItem("token");
+
+  const response = await axios.get(`${apiURL}/user/get-loan-history`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

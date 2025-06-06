@@ -10,7 +10,7 @@ const AuthMain = ({ inner }) => {
       <div
         data-aos="fade-right"
         className="AuthMain"
-        style={{ backgroundImage: `url(${authBg})` }}
+        style={{   background: 'linear-gradient(to right, #f2fcfe, #1c92d2)' }}
       >
         <div className="auth-inner">
           <div className="container-box">

@@ -5,7 +5,7 @@ import { InputText } from "primereact/inputtext";
 import { useEffect, useState } from "react";
 import { WithdrawalReportContent } from "../../constants/content/dummy/WithdrawalReportContent";
 import PageLoader from "../../components/ui/PageLoader";
-import { getWithdrawalHistory } from "../../api/payment-api";
+import { getWithdrawalHistory, getWithdrawals } from "../../api/payment-api";
 
 const WithdrawalReport = () => {
   const [globalFilter, setGlobalFilter] = useState(null);
@@ -17,7 +17,7 @@ const WithdrawalReport = () => {
   const fetchWithdrawalHistory = async () => {
     try {
       setLoading(true);
-      const response = await getWithdrawalHistory();
+      const response = await getWithdrawals();
       setData(response);
     } catch (error) {
       console.log(error);
@@ -31,8 +31,39 @@ const WithdrawalReport = () => {
   const serialNumberTemplate = (rowData, { rowIndex }) => {
     return rowIndex + 1;
   };
-  const dateTimeTemplate = (rowData) => {
-    return  new Date(rowData.createdAt).toLocaleString();
+
+  const amountTemplate = (rowData) => {
+    return `$${rowData.amount.toFixed(2)}`;
+  };
+
+  const bankDetailsTemplate = (rowData) => {
+    return (
+      <div className="space-y-1">
+        <div className="font-medium">{rowData.bankDetails.accountHolder}</div>
+        <div className="text-sm text-gray-600">{rowData.bankDetails.bankName}</div>
+        <div className="text-sm text-gray-500">A/C: {rowData.bankDetails.accountNumber}</div>
+        <div className="text-sm text-gray-500">IFSC: {rowData.bankDetails.ifscCode}</div>
+      </div>
+    );
+  };
+
+  const statusTemplate = (rowData) => {
+    const statusColors = {
+      pending: "bg-yellow-100 text-yellow-800",
+      approved: "bg-green-100 text-green-800",
+      rejected: "bg-red-100 text-red-800"
+    };
+
+    return (
+      <span className={`px-3 py-1 rounded-full text-sm font-medium ${statusColors[rowData.status] || 'bg-gray-100 text-gray-800'}`}>
+        {rowData.status.charAt(0).toUpperCase() + rowData.status.slice(1)}
+      </span>
+    );
+  };
+
+  const dateTemplate = (rowData, field) => {
+    if (!rowData[field]) return '-';
+    return new Date(rowData[field]).toLocaleString();
   };
 
   return (
@@ -95,11 +126,16 @@ const WithdrawalReport = () => {
             rowsPerPageOptions={[5, 10, 25]}
             filterDisplay="row"
             globalFilter={globalFilter}
+            emptyMessage="No withdrawal records found."
           >
-            <Column body={serialNumberTemplate} header="S.No" filter sortable />
-            <Column field="amount" header="Amount" filter sortable />
-            <Column body={dateTimeTemplate} field="createdAt" header="Date" filter sortable />
-            <Column field="status" header="Status" filter sortable />
+            <Column body={serialNumberTemplate} header="S.No" style={{ width: '70px' }} />
+            <Column field="amount" header="Amount" body={amountTemplate} sortable filter />
+            <Column field="bankDetails" header="Bank Details" body={bankDetailsTemplate} />
+            <Column field="status" header="Status" body={statusTemplate} sortable filter />
+            <Column field="requestedAt" header="Requested Date" body={(rowData) => dateTemplate(rowData, 'requestedAt')} sortable />
+            <Column field="processedAt" header="Processed Date" body={(rowData) => dateTemplate(rowData, 'processedAt')} sortable />
+            <Column field="walletUsed" header="Wallet" sortable filter />
+            <Column field="reason" header="Reason" />
           </DataTable>
         </div>
       </div>
