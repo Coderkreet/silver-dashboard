@@ -198,6 +198,11 @@ export const SidebarContent = {
       name: "Fund Request",
       options: [
         {
+          id: "All Investment History",
+          name: "All Investment History",
+          link: AuthenticatedRoutes.All_Investment_History,
+        },
+        {
           id: "Pending Fund Request",
           name: "Pending Fund Request",
           link: AuthenticatedRoutes.PENDING_FUND_REQUEST,

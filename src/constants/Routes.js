@@ -51,4 +51,5 @@ export const AuthenticatedRoutes = {
   CONTACT_US: "/contact-us",
   RAISE_TICKET_LIST: "/raise-ticket-list",
   ALL_USERS: "/all-users",
+  All_Investment_History : "/investment-history"
 };

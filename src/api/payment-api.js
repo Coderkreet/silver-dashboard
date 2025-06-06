@@ -159,9 +159,9 @@ export async function getPendingFunds(payload) {
 }
 
 export async function approveFundRequest(id) {
-  const response = await axios.post(
-    `${adminApi}/transfer/amount-aproved/${id}`,
-    { status: "accept" },
+  const response = await axios.put(
+    `${adminApi}/update-investment-status/`,
+    { investmentId :id ,status: "completed" },
     {
       headers: {
         Authorization: `Bearer ${token}`,

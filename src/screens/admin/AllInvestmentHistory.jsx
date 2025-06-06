@@ -12,7 +12,7 @@ import {
 import ViewPaymentDetailModal from "../../components/ui/ViewPaymentDetailModal";
 import { getInvestments } from "../../api/admin-api";
 
-const FundAproval = () => {
+const AllInvestmentHistory = () => {
   const [loading, setLoading] = useState(false);
   const [showDetail, setShowDetail] = useState(false);
   const [investments, setInvestments] = useState([]);
@@ -27,7 +27,7 @@ const FundAproval = () => {
         title: "Rejected",
         text: "Investment Rejected Successfully",
       });
-      fetchPendingInvestments();
+      fetchInvestments();
     } catch (error) {
       console.log(error);
       SwalError.fire({
@@ -49,7 +49,7 @@ const FundAproval = () => {
         title: "Approved",
         text: "Investment Approved Successfully",
       });
-      fetchPendingInvestments();
+      fetchInvestments();
     } catch (error) {
       console.log(error);
       SwalError.fire({
@@ -62,14 +62,12 @@ const FundAproval = () => {
     }
   };
 
-  const fetchPendingInvestments = async () => {
+  const fetchInvestments = async () => {
     try {
       setLoading(true);
       const response = await getInvestments();
       if (response?.data) {
-        // Filter only pending investments
-        const pendingInvestments = response.data.filter(inv => inv.status === 'pending');
-        setInvestments(pendingInvestments);
+        setInvestments(response.data);
       }
     } catch (error) {
       console.log(error);
@@ -79,7 +77,7 @@ const FundAproval = () => {
   };
 
   useEffect(() => {
-    fetchPendingInvestments();
+    fetchInvestments();
   }, []);
 
   const serialNumberTemplate = (rowData, { rowIndex }) => {
@@ -102,12 +100,14 @@ const FundAproval = () => {
           icon="pi pi-check"
           className="p-button-success p-button-sm"
           onClick={() => handleApprove(rowData)}
+          disabled={rowData.status !== 'pending'}
           style={{ 
-            background: "#22c55e",
+            background: rowData.status === 'pending' ? "#22c55e" : "#9ca3af",
             border: "none",
             padding: "0.5rem 1rem",
             fontSize: "0.875rem",
-            marginRight: "8px"
+            marginRight: "8px",
+            cursor: rowData.status === 'pending' ? "pointer" : "not-allowed"
           }}
         />
         <Button
@@ -115,11 +115,13 @@ const FundAproval = () => {
           icon="pi pi-times"
           className="p-button-danger p-button-sm"
           onClick={() => handleReject(rowData)}
+          disabled={rowData.status !== 'pending'}
           style={{ 
-            background: "#ef4444",
+            background: rowData.status === 'pending' ? "#ef4444" : "#9ca3af",
             border: "none",
             padding: "0.5rem 1rem",
-            fontSize: "0.875rem"
+            fontSize: "0.875rem",
+            cursor: rowData.status === 'pending' ? "pointer" : "not-allowed"
           }}
         />
       </div>
@@ -135,7 +137,6 @@ const FundAproval = () => {
       <div>
         <div>Name: {rowData.user?.name}</div>
         <div>Email: {rowData.user?.email}</div>
-        <div>Referral: {rowData.user?.referralCode}</div>
       </div>
     );
   };
@@ -156,14 +157,19 @@ const FundAproval = () => {
       <div>
         <div>Amount: ₹{rowData.amount?.toLocaleString()}</div>
         <div>Transaction ID: {rowData.transactionId}</div>
-        <div>Plan Amount: ₹{rowData.user?.planAmount?.toLocaleString()}</div>
       </div>
     );
   };
 
   const statusTemplate = (rowData) => {
+    const statusColors = {
+      'pending': 'bg-yellow-500',
+      'approved': 'bg-green-500',
+      'rejected': 'bg-red-500'
+    };
+    
     return (
-      <span className="badge bg-gradient-to-r from-yellow-400 to-yellow-600 text-black px-3 py-1 rounded-full text-sm font-medium shadow-sm">
+      <span className={`badge ${statusColors[rowData.status] || 'bg-gray-500'} text-black px-3 py-1 rounded-full text-sm`}>
         {rowData.status?.toUpperCase()}
       </span>
     );
@@ -188,7 +194,7 @@ const FundAproval = () => {
             paginator
             rows={10}
             rowsPerPageOptions={[5, 10, 25]}
-            emptyMessage="No pending investments found."
+            emptyMessage="No investment history found."
             className="p-datatable-sm"
             showGridlines
             stripedRows
@@ -199,7 +205,7 @@ const FundAproval = () => {
             <Column body={amountTemplate} header="Amount Details" style={{ width: '20%' }} />
             <Column body={statusTemplate} header="Status" style={{ width: '10%' }} />
             <Column body={dateTimeTemplate} header="Created Date" style={{ width: '15%' }} />
-            {/* <Column body={actionTemplate} header="Actions" style={{ width: '5%' }} /> */}
+            <Column body={actionTemplate} header="Actions" style={{ width: '5%' }} />
           </DataTable>
         </div>
       </div>
@@ -229,4 +235,6 @@ const FundAproval = () => {
   );
 };
 
-export default FundAproval;
+export default AllInvestmentHistory;
+
+

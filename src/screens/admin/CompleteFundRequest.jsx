@@ -1,64 +1,112 @@
 /* eslint-disable no-unused-vars */
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import { InputText } from "primereact/inputtext";
 import { useEffect, useState } from "react";
-import { WithdrawalReportContent } from "../../constants/content/dummy/WithdrawalReportContent";
 import PageLoader from "../../components/ui/PageLoader";
-import { getCompleteFunds } from "../../api/payment-api";
+import { getInvestments } from "../../api/admin-api";
 
 const CompleteFundRequest = () => {
-  const [globalFilter, setGlobalFilter] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState([]);
+  const [investments, setInvestments] = useState([]);
 
-  const fetchWithdrawalHistory = async () => {
+  const fetchCompletedInvestments = async () => {
     try {
       setLoading(true);
-      const response = await getCompleteFunds();
-      setData(response?.data);
+      const response = await getInvestments();
+      if (response?.data) {
+        // Filter only completed investments
+        const completedInvestments = response.data.filter(inv => inv.status === 'completed');
+        setInvestments(completedInvestments);
+      }
     } catch (error) {
       console.log(error);
     } finally {
       setLoading(false);
     }
   };
+
   useEffect(() => {
-    fetchWithdrawalHistory();
+    fetchCompletedInvestments();
   }, []);
+
   const serialNumberTemplate = (rowData, { rowIndex }) => {
     return rowIndex + 1;
   };
+
   const dateTimeTemplate = (rowData) => {
     return new Date(rowData.createdAt).toLocaleString();
+  };
+
+  const userTemplate = (rowData) => {
+    return (
+      <div>
+        <div>Name: {rowData.user?.name}</div>
+        <div>Email: {rowData.user?.email}</div>
+        <div>Referral: {rowData.user?.referralCode}</div>
+      </div>
+    );
+  };
+
+  const bankDetailsTemplate = (rowData) => {
+    return (
+      <div>
+        <div>Name: {rowData.bankdetails?.holderName}</div>
+        <div>Bank: {rowData.bankdetails?.bankName}</div>
+        <div>Account: {rowData.bankdetails?.accountNo}</div>
+        <div>IFSC: {rowData.bankdetails?.ifscCode}</div>
+      </div>
+    );
+  };
+
+  const amountTemplate = (rowData) => {
+    return (
+      <div>
+        <div>Amount: ₹{rowData.amount?.toLocaleString()}</div>
+        <div>Transaction ID: {rowData.transactionId}</div>
+        <div>Plan Amount: ₹{rowData.user?.planAmount?.toLocaleString()}</div>
+      </div>
+    );
+  };
+
+  const statusTemplate = (rowData) => {
+    return (
+      <span className="badge bg-green-500 text-black px-3 py-1 rounded-full text-sm">
+        {rowData.status?.toUpperCase()}
+      </span>
+    );
   };
 
   return (
     <>
       {loading && <PageLoader />}
       <div className="WithdrawalReport CompleteFundRequest martop">
-
         <div className="dataTable ss-card martop">
           <DataTable
-            value={data}
+            value={investments}
             paginator
             rows={10}
             rowsPerPageOptions={[5, 10, 25]}
-            filterDisplay="row"
-            globalFilter={globalFilter}
+            emptyMessage="No completed investments found."
+            className="p-datatable-sm"
+            showGridlines
+            stripedRows
           >
-            <Column body={serialNumberTemplate} header="S.No" filter sortable />
-            <Column field="_id" header="Request ID" filter sortable />
-            <Column field="fundTransferClientId._id" header="Sender User ID" filter sortable />
-            <Column field="fundTransferClientId.username" header="Sender Username" filter sortable />
-            <Column field="fundReceiverClientId._id" header="Receiver User ID" filter sortable />
-            <Column field="fundReceiverClientId.username" header="Receiver Username" filter sortable />
-            <Column field="amount" header="Amount" filter sortable />
-            <Column field="createdAt" body={dateTimeTemplate} header="Date" filter sortable />
-            <Column field="status" header="Status" filter sortable />
+            <Column body={serialNumberTemplate} header="S.No" style={{ width: '5%' }} />
+            <Column body={userTemplate} header="User Details" style={{ width: '20%' }} />
+            <Column body={bankDetailsTemplate} header="Bank Details" style={{ width: '25%' }} />
+            <Column body={amountTemplate} header="Amount Details" style={{ width: '20%' }} />
+            <Column body={statusTemplate} header="Status" style={{ width: '10%' }} />
+            <Column body={dateTimeTemplate} header="Created Date" style={{ width: '20%' }} />
           </DataTable>
         </div>
       </div>
+
+      <style>{`
+        .badge {
+          display: inline-block;
+          font-weight: 500;
+        }
+      `}</style>
     </>
   );
 };

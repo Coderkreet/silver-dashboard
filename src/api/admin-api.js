@@ -2,10 +2,11 @@ import axios from "axios";
 import { backendConfig } from "../constants/content/MainContent";
 
 const apiURL = backendConfig.base + "/admin";
+const us = backendConfig.base 
 const token = localStorage.getItem("token");
 
 export async function getPendingComplainHistory() {
-  const response = await axios.get(`${apiURL}/users/get-queries`, {
+  const response = await axios.get(`${us}/users/get-queries`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -17,7 +18,7 @@ export async function getPendingComplainHistory() {
 export async function approveComplainRequest(id) {
   const response = await axios.post(
     `${apiURL}/support/status/${id}`,
-    { status: "accept" },
+    { status: "accept"},
     {
       headers: {
         Authorization: `Bearer ${token}`,

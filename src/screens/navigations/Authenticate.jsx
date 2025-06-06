@@ -45,6 +45,7 @@ import OurPlanUser from "../user/OurPlanUser";
 import PlanHistory from "../admin/PlanHistory";
 import AllWithdrawlHistory from "../admin/IncomeHistory";
 import AllWithdrawalHistory from "../admin/AllWithdrawalHistory";
+import AllInvestmentHistory from "../admin/AllInvestmentHistory";
 const Authenticate = () => {
   const role = localStorage.getItem("role");
   return (
@@ -58,6 +59,15 @@ const Authenticate = () => {
                 <DashboardMain
                   inner={<FundAproval />}
                   name="Pending Fund Request"
+                />
+              }
+            />
+             <Route
+              path={AuthenticatedRoutes.All_Investment_History}
+              element={
+                <DashboardMain
+                  inner={<AllInvestmentHistory />}
+                  name="All Investment History"
                 />
               }
             />
