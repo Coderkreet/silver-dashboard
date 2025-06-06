@@ -5,7 +5,7 @@ const apiURL = backendConfig.base + "/admin";
 const token = localStorage.getItem("token");
 
 export async function getPendingComplainHistory() {
-  const response = await axios.get(`${apiURL}/support-in-process`, {
+  const response = await axios.get(`${apiURL}/users/get-queries`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

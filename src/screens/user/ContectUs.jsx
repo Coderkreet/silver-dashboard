@@ -6,7 +6,7 @@ import TextareaField from "../../components/ui/TextareaField";
 import { SwalError, SwalSuccess } from "../../utils/custom-alert";
 import { raiseSupportRequest } from "../../api/user-api";
 
-const ComplainRaiseTicket = () => {
+const ContectUs = () => {
   const [loading, setLoading] = useState(false);
   const [payload, setPayload] = useState({
     subject: "",
@@ -99,4 +99,4 @@ const ComplainRaiseTicket = () => {
   );
 };
 
-export default ComplainRaiseTicket;
+export default ContectUs;

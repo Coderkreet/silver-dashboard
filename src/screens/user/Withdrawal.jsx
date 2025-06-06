@@ -3,54 +3,50 @@ import { Button5 } from "../../components/ui/Buttons";
 import TextInput from "../../components/ui/TextInput";
 import { SwalError, SwalSuccess } from "../../utils/custom-alert";
 import PageLoader from "../../components/ui/PageLoader";
-import {
-  raiseWithdrawalRequest,
-  sendWithdrawalOtp,
-} from "../../api/payment-api";
+// import { raiseWithdrawalRequest } from "../../api/payment-api";
 import { useSelector } from "react-redux";
-import OTPPopup_v1 from "../../components/ui/OTPPopup_v1";
+import { raiseWithdrawalRequest } from "../../api/user-api";
 
 const Withdrawal = () => {
   const [loading, setLoading] = useState(false);
-  const [amount, setAmount] = useState(0);
-  const [modalIsOpen, setIsOpen] = useState(false);
   const userInfo = useSelector((state) => state.userInfo.userInfo);
-
-  const MIN_WITHDRAWAL_AMOUNT = 50;
-
-  const handleOtpSent = async () => {
-    try {
-      setLoading(true);
-      await sendWithdrawalOtp();
-      SwalSuccess.fire({
-        title: "Success",
-        text: "OTP sent successfully",
-        confirmButtonText: "OK",
-        timer: 2000,
-      });
-      setTimeout(() => {
-        setIsOpen(true);
-      }, 2000);
-    } catch (error) {
-      console.error("Error during OTP verification:", error);
-      SwalError.fire({
-        title: "Error",
-        text:
-          error?.response?.data?.message ||
-          "Error during OTP verification, please try again.",
-        confirmButtonText: "OK",
-        timer: 4000,
-      });
-    } finally {
-      setLoading(false);
+  const [formData, setFormData] = useState({
+    amount: "",
+    bankDetails: {
+      accountHolder: "",
+      accountNumber: "",
+      ifscCode: "",
+      bankName: "",
+      upiId: ""
+    }
+  });
+  
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name.startsWith("bank.")) {
+      const bankField = name.split(".")[1];
+      setFormData(prev => ({
+        ...prev,
+        bankDetails: {
+          ...prev.bankDetails,
+          [bankField]: value
+        }
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: value
+      }));
     }
   };
 
-  const handleWithdrawal = async (otp) => {
-    if (amount < MIN_WITHDRAWAL_AMOUNT) {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (formData.amount > userInfo?.user?.currentIncome) {
       return SwalError.fire({
         title: "Error",
-        text: `Amount must be at least $${MIN_WITHDRAWAL_AMOUNT}`,
+        text: "Amount must be less than your wallet balance",
         confirmButtonText: "OK",
         timer: 4000,
       });
@@ -58,51 +54,48 @@ const Withdrawal = () => {
 
     try {
       setLoading(true);
-      const response = await raiseWithdrawalRequest({ amount, otp });
-      setIsOpen(false);
+      const withdrawalData = {
+        userId: userInfo?.user?._id,
+        amount: Number(formData.amount),
+        status: "pending",
+        transactionId: null,
+        bankDetails: formData.bankDetails,
+        requestedAt: new Date().toISOString(),
+        processedAt: null,
+        reason: null
+      };
 
+      const response = await raiseWithdrawalRequest(withdrawalData);
+      
       SwalSuccess.fire({
         title: "Success",
-        text: response?.message,
+        text: response?.message || "Withdrawal request submitted successfully",
         confirmButtonText: "OK",
         timer: 4000,
       });
-      setTimeout(() => {
-        window.location.reload();
-      }, 2000);
+
+      // Reset form
+      setFormData({
+        amount: "",
+        bankDetails: {
+          accountHolder: "",
+          accountNumber: "",
+          ifscCode: "",
+          bankName: "",
+          upiId: ""
+        }
+      });
+
     } catch (error) {
       console.error("Error sending withdrawal request:", error);
-
       SwalError.fire({
         title: "Error",
-        text:
-          error?.response?.data?.message || "Error sending withdrawal request",
+        text: error?.response?.data?.message || "Error sending withdrawal request",
         confirmButtonText: "OK",
         timer: 4000,
       });
-      setIsOpen(false);
     } finally {
       setLoading(false);
-    }
-  };
-
-  const handleWithdrawClick = () => {
-    if (amount < MIN_WITHDRAWAL_AMOUNT) {
-      return SwalError.fire({
-        title: "Error",
-        text: `Amount must be at least $${MIN_WITHDRAWAL_AMOUNT}`,
-        confirmButtonText: "OK",
-        timer: 4000,
-      });
-    } else if (amount > userInfo?.user?.currentIncome) {
-      return SwalError.fire({
-        title: "Error",
-        text: `Amount must be less than your wallet balance`,
-        confirmButtonText: "OK",
-        timer: 4000,
-      });
-    } else {
-      handleOtpSent();
     }
   };
 
@@ -116,26 +109,71 @@ const Withdrawal = () => {
               Main Wallet : ${userInfo?.user?.currentIncome?.toFixed(2)}
             </h5>
           </div>
-          <div className="input-container">
-            <TextInput
-              onChange={(e) => setAmount(e.target.value)}
-              placeholder={"Enter Amount"}
-              labelName="Amount"
-              value={amount}
-            />
-          </div>
-          <div className="btns">
-            <Button5 onClick={handleWithdrawClick} name={"Withdraw"} />
-          </div>
+          
+          <form onSubmit={handleSubmit}>
+            <div className="input-container">
+              <TextInput
+                onChange={handleChange}
+                placeholder="Enter Amount"
+                labelName="Amount"
+                name="amount"
+                value={formData.amount}
+                type="number"
+                required
+              />
+
+              <TextInput
+                onChange={handleChange}
+                placeholder="Enter Account Holder Name"
+                labelName="Account Holder Name"
+                name="bank.accountHolder"
+                value={formData.bankDetails.accountHolder}
+                required
+              />
+
+              <TextInput
+                onChange={handleChange}
+                placeholder="Enter Account Number"
+                labelName="Account Number"
+                name="bank.accountNumber"
+                value={formData.bankDetails.accountNumber}
+                required
+              />
+
+              <TextInput
+                onChange={handleChange}
+                placeholder="Enter IFSC Code"
+                labelName="IFSC Code"
+                name="bank.ifscCode"
+                value={formData.bankDetails.ifscCode}
+                required
+              />
+
+              <TextInput
+                onChange={handleChange}
+                placeholder="Enter Bank Name"
+                labelName="Bank Name"
+                name="bank.bankName"
+                value={formData.bankDetails.bankName}
+                required
+              />
+
+              <TextInput
+                onChange={handleChange}
+                placeholder="Enter UPI ID"
+                labelName="UPI ID"
+                name="bank.upiId"
+                value={formData.bankDetails.upiId}
+                required
+              />
+            </div>
+
+            <div className="btns">
+              <Button5 type="submit" name="Withdraw" />
+            </div>
+          </form>
         </div>
       </div>
-
-      <OTPPopup_v1
-        show={modalIsOpen}
-        verifiedOtp={handleWithdrawal}
-        handleClose={() => setIsOpen(false)}
-        contactValue={userInfo?.user?.email}
-      />
     </>
   );
 };

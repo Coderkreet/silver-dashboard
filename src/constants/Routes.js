@@ -27,6 +27,7 @@ export const AuthenticatedRoutes = {
   TEAM_DIRECT: "/team-direct",
   TEAM_TREE: "/team-tree",
   WALLET : "/wallet",
+  WITHDRAWAL_REQUEST :"/withdrawal-request",
   WITHDRAWAL_REPORT: "/withdrawal-report",
   OUR_PLANS: "/our-plans",
   OUR_PLANS_ADMIN: "/our-plans-admin",
@@ -46,7 +47,7 @@ export const AuthenticatedRoutes = {
   REJECTED_FUND_REQUEST: "/rejected-fund-request",
   REJECTED_WITHDRAWAL_REQUEST: "/rejected-withdrawal-request",
   SUPPORT_RAISE_TICKET_HISTORY: "/support-raise-ticket-history",
-  SUPPORT_RAISE_TICKET: "/support-raise-ticket",
+  CONTACT_US: "/contact-us",
   RAISE_TICKET_LIST: "/raise-ticket-list",
   ALL_USERS: "/all-users",
 };

@@ -211,19 +211,19 @@ export async function rejectFundRequest(id) {
   return response;
 }
 
-export async function raiseWithdrawalRequest(payload) {
-  const response = await axios.post(
-    `${setApiURL}/withdraw-admin/request`,
-    payload,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      withCredentials: true,
-    }
-  );
-  return response?.data;
-}
+// export async function raiseWithdrawalRequest(payload) {
+//   const response = await axios.post(
+//     `${setApiURL}/withdraw-admin/request`,
+//     payload,
+//     {
+//       headers: {
+//         Authorization: `Bearer ${token}`,
+//       },
+//       withCredentials: true,
+//     }
+//   );
+//   return response?.data;
+// }
 
 export async function sendWithdrawalOtp() {
   const response = await axios.post(`${setApiURL}/withdrawal/verify-otp`,{}, {
@@ -291,3 +291,15 @@ export async function getCompleteWithdrawal() {
   const response = await axios.get(`${adminApi}/withdrawal-completed-requests`);
   return response?.data;
 }
+
+
+export async function getWithdrawals() {
+  const response = await axios.get(`${setApiURL}/user/get-withdrawals`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    withCredentials: true,
+  });
+  return response?.data;
+}
+

@@ -30,7 +30,7 @@ import CompleteFundRequest from "../admin/CompleteFundRequest";
 import RejectFundRequest from "../admin/RejectFundRequest";
 import CompletePlanRequest from "../admin/CompletePlanRequest";
 import RejectPlanRequest from "../admin/RejectPlanRequest";
-import ComplainRaiseTicket from "../user/ComplainRaiseTicket";
+import ComplainRaiseTicket from "../user/ContectUs";
 import ComplainTicketHistory from "../user/ComplainTicketHistory";
 import ComplainTicketList from "../admin/ComplainTicketList";
 import AllUsersList from "../admin/AllUsersList";
@@ -302,8 +302,8 @@ const Authenticate = () => {
               element={<DashboardMain inner={<TeamTree />} name="Team Tree" />}
             />
             <Route
-              path={AuthenticatedRoutes.WALLET}
-              element={<DashboardMain inner={<Withdrawal />} name="Wallet" />}
+              path={AuthenticatedRoutes.WITHDRAWAL_REQUEST}
+              element={<DashboardMain inner={<Withdrawal />} name="WITHDRAWAL_REPORT" />}
             />
             <Route
               path={AuthenticatedRoutes.WITHDRAWAL_REPORT}
@@ -368,7 +368,7 @@ const Authenticate = () => {
               }
             />
              <Route
-              path={AuthenticatedRoutes.SUPPORT_RAISE_TICKET}
+              path={AuthenticatedRoutes.CONTACT_US}
               element={
                 <DashboardMain
                   inner={<ComplainRaiseTicket />}
