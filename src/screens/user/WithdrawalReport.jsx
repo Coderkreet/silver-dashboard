@@ -33,7 +33,7 @@ const WithdrawalReport = () => {
   };
 
   const amountTemplate = (rowData) => {
-    return `$${rowData.amount.toFixed(2)}`;
+    return `₹ ${rowData.amount.toFixed(2)}`;
   };
 
   const bankDetailsTemplate = (rowData) => {
@@ -74,7 +74,7 @@ const WithdrawalReport = () => {
           <div className="ss-card">
             <div className="txt">
               <h5 className="heading">Total Withdrawal</h5>
-              <p className="para1">$ {data?.totalAmount?.toFixed(2) || 0}</p>
+              <p className="para1">₹ {data?.totalAmount?.toFixed(2) || 0}</p>
             </div>
             <div className="icon">
               <img
@@ -86,7 +86,7 @@ const WithdrawalReport = () => {
           <div className="ss-card">
             <div className="txt">
               <h5 className="heading">Paid Withdrawal</h5>
-              <p className="para1">$ {data?.completedAmount?.toFixed(2) || 0}</p>
+              <p className="para1">₹ {data?.completedAmount?.toFixed(2) || 0}</p>
             </div>
             <div className="icon">
               <img
@@ -98,7 +98,7 @@ const WithdrawalReport = () => {
           <div className="ss-card">
             <div className="txt">
               <h5 className="heading">Reject Withdrawal</h5>
-              <p className="para1">$ {data?.totalRejectedAmount?.toFixed(2) || 0}</p>
+              <p className="para1">₹ {data?.totalRejectedAmount?.toFixed(2) || 0}</p>
             </div>
             <div className="icon">
               <img
@@ -124,8 +124,8 @@ const WithdrawalReport = () => {
             paginator
             rows={10}
             rowsPerPageOptions={[5, 10, 25]}
-            filterDisplay="row"
-            globalFilter={globalFilter}
+            // filterDisplay="row"
+            // globalFilter={globalFilter}
             emptyMessage="No withdrawal records found."
           >
             <Column body={serialNumberTemplate} header="S.No" style={{ width: '70px' }} />
@@ -133,9 +133,9 @@ const WithdrawalReport = () => {
             <Column field="bankDetails" header="Bank Details" body={bankDetailsTemplate} />
             <Column field="status" header="Status" body={statusTemplate} sortable filter />
             <Column field="requestedAt" header="Requested Date" body={(rowData) => dateTemplate(rowData, 'requestedAt')} sortable />
-            <Column field="processedAt" header="Processed Date" body={(rowData) => dateTemplate(rowData, 'processedAt')} sortable />
+            {/* <Column field="processedAt" header="Processed Date" body={(rowData) => dateTemplate(rowData, 'processedAt')} sortable /> */}
             <Column field="walletUsed" header="Wallet" sortable filter />
-            <Column field="reason" header="Reason" />
+            {/* <Column field="reason" header="Reason" /> */}
           </DataTable>
         </div>
       </div>

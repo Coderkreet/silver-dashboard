@@ -34,11 +34,9 @@ export const Axios = axios.create({
 
 Axios.interceptors.request.use(
   (config) => {
-    const state = Store.getState();
-    const token = state?.auth?.token;
-
-    console.log(token)
-    
+    // const state = Store.getState();
+    const token = localStorage.getItem("token")
+  
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

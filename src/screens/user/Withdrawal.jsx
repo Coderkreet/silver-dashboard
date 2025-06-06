@@ -6,11 +6,14 @@ import PageLoader from "../../components/ui/PageLoader";
 // import { raiseWithdrawalRequest } from "../../api/payment-api";
 import { useSelector } from "react-redux";
 import { raiseWithdrawalRequest } from "../../api/user-api";
+import SelectInput from "../../components/ui/SelectInput";
+import { Wallet } from "lucide-react";
 
 const Withdrawal = () => {
   const [loading, setLoading] = useState(false);
   const userInfo = useSelector((state) => state.userInfo.userInfo);
   const [formData, setFormData] = useState({
+    wallet:"",
     amount: "",
     bankDetails: {
       accountHolder: "",
@@ -54,6 +57,7 @@ const Withdrawal = () => {
 
     try {
       setLoading(true);
+
       const withdrawalData = {
         userId: userInfo?.user?._id,
         amount: Number(formData.amount),
@@ -62,7 +66,9 @@ const Withdrawal = () => {
         bankDetails: formData.bankDetails,
         requestedAt: new Date().toISOString(),
         processedAt: null,
-        reason: null
+        reason: null,
+        wallet: formData.wallet
+
       };
 
       const response = await raiseWithdrawalRequest(withdrawalData);
@@ -99,6 +105,22 @@ const Withdrawal = () => {
     }
   };
 
+  const handleSelectChange = (e) => {
+    const { value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      wallet: value // Update wallet field in formData
+    }));
+  };
+
+  
+
+   const options = [
+    { value: "rupeeWallet", label: "Rupee Wallet" },
+    { value: "eCoinWallet", label: "E-Coin Wallet" },
+    { value: "investmentWallet", label: "Investment Wallet" }
+  ];
+
   return (
     <>
       {loading && <PageLoader />}
@@ -112,6 +134,15 @@ const Withdrawal = () => {
           
           <form onSubmit={handleSubmit}>
             <div className="input-container">
+
+              <SelectInput
+                labelName={"Select Wallet"}
+                options={options}
+                value={formData.wallet}
+                onChange={handleSelectChange}
+
+                
+              />
               <TextInput
                 onChange={handleChange}
                 placeholder="Enter Amount"

@@ -3,6 +3,8 @@ import { backendConfig } from "../constants/content/MainContent";
 
 const apiURL = backendConfig.base;
 
+const token = localStorage.getItem("token");
+
 export async function raiseSupportRequest(payload) {
   const token = localStorage.getItem("token"); // <-- Move here
 
@@ -52,7 +54,7 @@ export async function getPendingComplainHistoryUser() {
 export async function getComplainHistory() {
   const token = localStorage.getItem("token"); // <-- Move here
 
-  const response = await axios.get(`${apiURL}/support/messages`, {
+  const response = await axios.get(`${apiURL}/user/get-queries`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -112,15 +114,24 @@ export async function raiseWithdrawalRequest(payload) {
 }
 
 export async function getReferrals() {
-  const token = localStorage.getItem("token");
-
-  const response = await axios.get(`${apiURL}/user/get-referrals`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    withCredentials: true,
-  });
+  // const token = localStorage.getItem("token");
+try {
+  const response = await axios.get(`${apiURL}/user/get-referrals`,
+     {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      withCredentials: true,
+    }
+  );
   return response?.data;
+  
+} catch (error) {
+  console.log(error)
+  return error.response.data
+  
+}
+  
 }
 
 

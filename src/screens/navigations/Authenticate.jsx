@@ -341,7 +341,15 @@ const Authenticate = () => {
                 />
               }
             />
-          
+            <Route
+              path={AuthenticatedRoutes.WITHDRAWAL_REPORT}
+              element={
+                <DashboardMain
+                  inner={<WithdrawalReport />}
+                  name="Investment Form"
+                />
+              }
+            />
 
             <Route
               path={AuthenticatedRoutes.FUND_REQUEST}
@@ -399,7 +407,7 @@ const Authenticate = () => {
               element={
                 <DashboardMain
                   inner={<ComplainRaiseTicket />}
-                  name="Raise Ticket"
+                  name="Query History"
                 />
               }
             />

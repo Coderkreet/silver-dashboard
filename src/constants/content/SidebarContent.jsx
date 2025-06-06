@@ -74,7 +74,7 @@ export const SidebarContent = {
     {
       id: "Fund",
       icon: <FaRegMoneyBill1 />,
-      name: "Fund",
+      name: "Loan",
       options: [
         // {
         //   id: "Fund Request",
@@ -90,6 +90,38 @@ export const SidebarContent = {
           id: "Loan Request Form",
           name: " Loan Request Form",
           link: AuthenticatedRoutes.LOAN_FORM,
+        },
+        {
+          id: "Loan Request History",
+          name: "Loan Request History",
+          link: AuthenticatedRoutes.FUND_TRANSFER_HISTORY,
+        },
+        // {
+        //   id: "Fund Recieve History",
+        //   name: "Fund Receive History",
+        //   link: AuthenticatedRoutes.FUND_RECEIVE_HISTORY,
+        // },
+      ],
+    },
+     {
+      id: "investment",
+      icon: <FaRegMoneyBill1 />,
+      name: "Investment",
+      options: [
+        // {
+        //   id: "Fund Request",
+        //   name: "Fund Request",
+        //   link: AuthenticatedRoutes.FUND_REQUEST,
+        // },
+        // {
+        //   id: "Fund Transfer",
+        //   name: "Fund Transfer",
+        //   link: AuthenticatedRoutes.FUND_TRANSFER,
+        // },
+        {
+          id: "Investment Form",
+          name: "Investment Form",
+          link: AuthenticatedRoutes.INVESTMENT,
         },
         {
           id: "Loan Request History",
@@ -127,7 +159,7 @@ export const SidebarContent = {
         },
         {
           id: "Support History",
-          name: "Raise Ticket History",
+          name: "Query History",
           link: AuthenticatedRoutes.SUPPORT_RAISE_TICKET_HISTORY,
         },
         // {

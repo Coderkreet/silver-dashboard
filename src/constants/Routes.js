@@ -26,6 +26,7 @@ export const AuthenticatedRoutes = {
   ALL_WITHDRAWAL_HISTORY: "/all-withdrawal-history",
   ALL_INCOME_HISTORY : "/all-income-history",
   TEAM_DIRECT: "/team-direct",
+  INVESTMENT:"/investment",
   TEAM_TREE: "/team-tree",
   WALLET : "/wallet",
   WITHDRAWAL_REQUEST :"/withdrawal-request",

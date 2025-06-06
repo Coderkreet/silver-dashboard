@@ -103,11 +103,11 @@ export async function getPlans() {
 export const placeOrder = async (data) => {
   try {
     const response = await axios.post(`${userURL}/user/create-orders`, data,
-{
-       headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  }
+// {
+//        headers: {
+//       Authorization: `Bearer ${token}`,
+//     },
+//   }
     );
     return response;
   } catch (error) {

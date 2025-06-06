@@ -90,8 +90,8 @@ const DirectTeamLists = () => {
             paginator
             rows={10}
             rowsPerPageOptions={[5, 10, 25]}
-            filterDisplay="row"
-            globalFilter={globalFilter}
+            // filterDisplay="row"
+            // globalFilter={globalFilter}
             emptyMessage="No team members found."
           >
             <Column body={serialNumberTemplate} header="S.No" style={{ width: '70px' }} />
@@ -99,8 +99,8 @@ const DirectTeamLists = () => {
             <Column body={maskEmailTemplate} header="Email" sortable filter />
             <Column field="sponsorId" header="Sponsor ID" sortable filter />
             <Column field="referralCode" header="Referral Code" sortable filter />
-            <Column body={walletTemplate} header="Wallet Details" />
-            <Column body={planTemplate} header="Plan Details" />
+            {/* <Column body={walletTemplate} header="Wallet Details" /> */}
+            {/* <Column body={planTemplate} header="Plan Details" /> */}
             <Column body={statusTemplate} header="Status" sortable filter />
             <Column body={dateTemplate} header="Joined Date" sortable />
           </DataTable>
