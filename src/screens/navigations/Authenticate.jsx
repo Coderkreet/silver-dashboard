@@ -29,7 +29,7 @@ import RejectWithdrawalRequest from "../admin/RejectWithdrawalRequest";
 import CompleteFundRequest from "../admin/CompleteFundRequest";
 import RejectFundRequest from "../admin/RejectFundRequest";
 import CompletePlanRequest from "../admin/CompletePlanRequest";
-import RejectPlanRequest from "../admin/RejectPlanRequest";
+import RejectPlanRequest from "../admin/PlanHistory";
 import ComplainRaiseTicket from "../user/ContectUs";
 import ComplainTicketHistory from "../user/ComplainTicketHistory";
 import ComplainTicketList from "../admin/ComplainTicketList";
@@ -42,6 +42,9 @@ import LoanStatus from "../admin/LoanStatus";
 import UpdateLoan from "../admin/UpdateLoan";
 import LoanRequestForm from "../user/income-pages/LoanRequestForm";
 import OurPlanUser from "../user/OurPlanUser";
+import PlanHistory from "../admin/PlanHistory";
+import AllWithdrawlHistory from "../admin/IncomeHistory";
+import AllWithdrawalHistory from "../admin/AllWithdrawalHistory";
 const Authenticate = () => {
   const role = localStorage.getItem("role");
   return (
@@ -113,10 +116,10 @@ const Authenticate = () => {
               }
             />
             <Route
-              path={AuthenticatedRoutes.REJECTED_USERS}
+              path={AuthenticatedRoutes.PLAN_HISTORY}
               element={
                 <DashboardMain
-                  inner={<RejectPlanRequest />}
+                  inner={<PlanHistory />}
                   name="Reject Plan Request"
                 />
               }
@@ -194,8 +197,12 @@ const Authenticate = () => {
               element={<DashboardMain inner={<ProfilePage />} name="Profile" />}
             />
            <Route
-              path={AuthenticatedRoutes.INCOME_HISTORY}
-              element={<DashboardMain inner={<IncomeHistory />} name="INCOME_History" />}
+              path={AuthenticatedRoutes.ALL_INCOME_HISTORY}
+              element={<DashboardMain inner={<IncomeHistory />} name="ALL INCOME HISTORY" />}
+            />
+              <Route
+              path={AuthenticatedRoutes.ALL_WITHDRAWAL_HISTORY}
+              element={<DashboardMain inner={<AllWithdrawalHistory />} name="ALL INCOME HISTORY" />}
             />
               <Route
               path={AuthenticatedRoutes.LOAN_STATUS}

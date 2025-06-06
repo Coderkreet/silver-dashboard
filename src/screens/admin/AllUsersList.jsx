@@ -140,8 +140,16 @@ const AllUsersList = () => {
     return new Date(rowData.createdAt).toLocaleString();
   };
 
-  const walletTemplate = (rowData) => {
-    return <span className="p-2">{rowData?.wallet ? Number(rowData.wallet).toFixed(2) : '0.00'}</span>;
+  const rupeeWalletTemplate = (rowData) => {
+    return <span className="p-2">{rowData?.wallet?.rupeeWallet ? Number(rowData.wallet.rupeeWallet).toFixed(2) : '0.00'}</span>;
+  };
+
+  const eCoinWalletTemplate = (rowData) => {
+    return <span className="p-2">{rowData?.wallet?.eCoinWallet ? Number(rowData.wallet.eCoinWallet).toFixed(2) : '0.00'}</span>;
+  };
+
+  const investmentWalletTemplate = (rowData) => {
+    return <span className="p-2">{rowData?.wallet?.investmentWallet ? Number(rowData.wallet.investmentWallet).toFixed(2) : '0.00'}</span>;
   };
 
   const investmentTemplate = (rowData) => {
@@ -182,16 +190,45 @@ const AllUsersList = () => {
             <Column sortable field="email" header="Email" />
             <Column sortable field="sponsorId" header="Sponsor ID" />
             <Column sortable field="referralCode" header="Referral Code" />
-            <Column body={walletTemplate} header="Wallet Balance" sortable />
+            <Column body={rupeeWalletTemplate} header="Rupee Wallet" sortable />
+            <Column body={eCoinWalletTemplate} header="eCoin Wallet" sortable />
+            <Column body={investmentWalletTemplate} header="Investment Wallet" sortable />
             <Column body={investmentTemplate} header="Investment Amount" sortable />
             <Column body={earningsTemplate} header="Earnings" sortable />
             <Column field="isVerified" header="Verified" sortable />
             <Column field="hasActivePlan" header="Active Plan" sortable />
             <Column body={dateTimeTemplate} header="Join Date" sortable />
-            <Column body={actionTemplate} header="Actions" />
+            {/* <Column body={actionTemplate} header="Actions" /> */}
           </DataTable>
         </div>
       </div>
+
+      <style>{`
+        .wallet-details {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          padding: 8px;
+        }
+        .wallet-item {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 4px 8px;
+          background: rgba(0, 0, 0, 0.02);
+          border-radius: 4px;
+        }
+        .wallet-label {
+          font-weight: 500;
+          color: #666;
+          font-size: 0.9rem;
+        }
+        .wallet-value {
+          font-weight: 600;
+          color: #2c3e50;
+          font-size: 0.9rem;
+        }
+      `}</style>
     </>
   );
 };

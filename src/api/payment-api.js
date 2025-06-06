@@ -236,14 +236,19 @@ export async function sendWithdrawalOtp() {
 }
 
 export async function getPendingWithdrawalRequest(payload) {
-  const response = await axios.get(`${adminApi}/withdrawal-requests`, payload);
+  const response = await axios.get(`${adminApi}/get-pending-withdraws`, payload, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    withCredentials: true,
+  });
   return response?.data;
 }
 
 export async function approveWithdrawalRequest(id) {
   const response = await axios.post(
     `${adminApi}/withdraw-admin/verify/${id}`,
-    { status: "complete" },
+    { status: "approved" },
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -256,7 +261,7 @@ export async function approveWithdrawalRequest(id) {
 export async function rejectWithdrawalRequest(id) {
   const response = await axios.post(
     `${adminApi}/withdraw-admin/verify/${id}`,
-    { status: "reject" },
+    { status: "rejected" },
     {
       headers: {
         Authorization: `Bearer ${token}`,

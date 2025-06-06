@@ -16,8 +16,8 @@ export const MainContent = {
 export const backendConfig = {
 
 
-  base: "http://192.168.1.57:1920/api",
-  origin: "http://192.168.1.57:1920",
+  base: "http://192.168.82.184:1920/api",
+  origin: "http://192.168.82.184:1920",
   // base: "https://api.ftnetwork.online/api",
   // origin: "https://api.ftnetwork.online",
   // base: "https://cnfp6kct-1921.inc1.devtunnels.ms/api",

@@ -128,3 +128,74 @@ export async function deleteUserAdminEnd(id) {
   );
   return response;
 }
+
+
+export async function getWithdrawalsAdmin() {
+  const response = await axios.get(
+    `${apiURL}/get-withdrawals`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      withCredentials: true,
+    }
+  );
+  return response?.data;
+}
+
+
+export async function getLoanStatus() {
+  const response = await axios.get(
+    `${apiURL}/get-loan-status`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      withCredentials: true,
+    }
+  );
+  return response?.data;
+}
+
+export async function updateLoanStatus(id, formData) {
+  const response = await axios.patch(
+    `${apiURL}/update-loan-status/${id}`,
+    formData,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      withCredentials: true,
+    }
+  );
+  return response?.data;
+}
+
+
+
+export async function getDashboardStats() {
+  const response = await axios.get(
+    `${apiURL}/dashboard-stats`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      withCredentials: true,
+    }
+  );
+  return response?.data;
+}
+
+
+export async function getInvestments() {
+  const response = await axios.get(
+    `${apiURL}/get-investments`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      withCredentials: true,
+    }
+  );
+  return response?.data;
+}

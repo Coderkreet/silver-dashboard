@@ -12,6 +12,7 @@ import {
 } from "../../api/payment-api";
 import ViewPaymentDetailModal from "../../components/ui/ViewPaymentDetailModal";
 import { Button2 } from "../../components/ui/Buttons";
+import { getInvestments } from "../../api/admin-api";
 
 const FundAproval = () => {
   const [globalFilter, setGlobalFilter] = useState(null);
@@ -69,7 +70,7 @@ const FundAproval = () => {
   const getPendingUser = async () => {
     try {
       setLoading(true);
-      const response = await getPendingFunds();
+      const response = await getInvestments();
       setUserList(response?.data);
     } catch (error) {
       console.log(error);

@@ -130,12 +130,12 @@ export const SidebarContent = {
           name: "Raise Ticket History",
           link: AuthenticatedRoutes.SUPPORT_RAISE_TICKET_HISTORY,
         },
-        {
-          id: "Connect on Telegram",
-          name: "Connect on Telegram",
-          link: MainContent.telegram_link,
-          external: true,
-        },
+        // {
+        //   id: "Connect on Telegram",
+        //   name: "Connect on Telegram",
+        //   link: MainContent.telegram_link,
+        //   external: true,
+        // },
       ],
     },
     // {
@@ -188,7 +188,7 @@ export const SidebarContent = {
         {
           id: "Plan History",
           name: "Plan History",
-          link: AuthenticatedRoutes.REJECTED_USERS,
+          link: AuthenticatedRoutes.ALL_INCOME_HISTORY,
         },
       ],
     },
@@ -220,9 +220,9 @@ export const SidebarContent = {
       name: "Withdrawal Request",
       options: [
         {
-          id: "Income History",
-          name: "Income History",
-          link: AuthenticatedRoutes.INCOME_HISTORY,
+          id: "All Withdrawal History",
+          name: "All Withdrawal History",
+          link: AuthenticatedRoutes.ALL_WITHDRAWAL_HISTORY,
         },
         {
           id: "Pending Withdrawal Request",

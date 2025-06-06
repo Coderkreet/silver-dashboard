@@ -37,6 +37,17 @@ export async function getRefHistory(payload) {
 }
 
 
+export async function getPendingComplainHistoryUser() {
+  const token = localStorage.getItem("token"); // <--
+  const response = await axios.get(`${apiURL}/user/get-queries`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    withCredentials: true,
+  });
+  return response?.data;
+}
+
 
 export async function getComplainHistory() {
   const token = localStorage.getItem("token"); // <-- Move here

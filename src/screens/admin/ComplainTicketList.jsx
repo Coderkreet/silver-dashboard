@@ -6,6 +6,7 @@ import PageLoader from "../../components/ui/PageLoader";
 import ViewTicketDetail from "../../components/ui/ViewPaymentDetailModal";
 import { SwalError, SwalSuccess } from "../../utils/custom-alert";
 import { approveComplainRequest, getPendingComplainHistory, rejectComplainRequest } from "../../api/admin-api";
+import { getPendingComplainHistoryUser } from "../../api/user-api";
 
 const ComplainTicketList = () => {
   // eslint-disable-next-line no-unused-vars
@@ -17,7 +18,7 @@ const ComplainTicketList = () => {
   const getRaiseTicketHistory = async () => {
     try {
       setLoading(true);
-      const response = await getPendingComplainHistory();
+      const response = await getPendingComplainHistoryUser();
       setHistory(response?.data);
     } catch (error) {
       console.log(error);
