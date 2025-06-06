@@ -162,3 +162,44 @@ export async function GetPlansUser() {
   );
   return response;
 }
+
+
+export async function createInvestment(data) {
+  const token = localStorage.getItem("token");
+  try {
+    const response = await axios.post(
+      `${apiURL}/user/investment`,
+      data,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      }
+    );
+    return response?.data;
+  } catch (error) {
+    console.log(error);
+    return error.response.data;
+  }
+}
+
+export async function getInvestmentHistory() {
+  const token = localStorage.getItem("token");
+  try {
+    const response = await axios.get(
+      `${apiURL}/user/get-investments`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      }
+    );
+    return response?.data;
+  } catch (error) {
+    console.log(error);
+    return error.response.data;
+  }
+}
+

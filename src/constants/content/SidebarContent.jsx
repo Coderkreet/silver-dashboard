@@ -69,6 +69,7 @@ export const SidebarContent = {
           name: "Withdrawal Report",
           link: AuthenticatedRoutes.WITHDRAWAL_REPORT,
         },
+        
       ],
     },
     {
@@ -121,12 +122,12 @@ export const SidebarContent = {
         {
           id: "Investment Form",
           name: "Investment Form",
-          link: AuthenticatedRoutes.INVESTMENT,
+          link: AuthenticatedRoutes.CREATE_INVESTMENT_FORM,
         },
         {
-          id: "Loan Request History",
-          name: "Loan Request History",
-          link: AuthenticatedRoutes.FUND_TRANSFER_HISTORY,
+          id: "Investment History",
+          name: "Investment History",
+          link: AuthenticatedRoutes.Investment_History,
         },
         // {
         //   id: "Fund Recieve History",

@@ -3,6 +3,7 @@ import { SwalError, SwalSuccess } from '../../../utils/custom-alert'
 import { requestLoan } from '../../../api/user-api'
 
 const LoanRequestForm = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [formData, setFormData] = useState({
     loanAmount: '',
     bankName: '',
@@ -44,6 +45,7 @@ const LoanRequestForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setIsSubmitting(true)
     try {
       const response = await requestLoan(formData)
       if (response?.success) {
@@ -87,6 +89,8 @@ const LoanRequestForm = () => {
         title: 'Error',
         text: error?.response?.data?.message || 'Something went wrong!'
       })
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -447,8 +451,11 @@ const LoanRequestForm = () => {
                   <button
                     type="submit"
                     className="btn btn-lg px-5"
+                    disabled={isSubmitting}
                     style={{
-                      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                      background: isSubmitting 
+                        ? 'linear-gradient(135deg, #a5b4fc 0%, #a78bfa 100%)'
+                        : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                       border: 'none',
                       borderRadius: '15px',
                       color: 'white',
@@ -456,10 +463,12 @@ const LoanRequestForm = () => {
                       fontWeight: '600',
                       padding: '1rem 3rem',
                       boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
-                      transition: 'all 0.3s ease'
+                      transition: 'all 0.3s ease',
+                      cursor: isSubmitting ? 'not-allowed' : 'pointer',
+                      opacity: isSubmitting ? 0.7 : 1
                     }}
                   >
-                    Submit Request
+                    {isSubmitting ? 'Submitting...' : 'Submit Request'}
                   </button>
                 </div>
               </div>

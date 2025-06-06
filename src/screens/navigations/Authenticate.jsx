@@ -46,6 +46,8 @@ import PlanHistory from "../admin/PlanHistory";
 import AllWithdrawlHistory from "../admin/IncomeHistory";
 import AllWithdrawalHistory from "../admin/AllWithdrawalHistory";
 import AllInvestmentHistory from "../admin/AllInvestmentHistory";
+import InvestmentForm from "../user/InvestmentForm";
+import InvestmentHistory from "../user/InvestmentHistory";
 const Authenticate = () => {
   const role = localStorage.getItem("role");
   return (
@@ -330,7 +332,7 @@ const Authenticate = () => {
             />
             <Route
               path={AuthenticatedRoutes.WITHDRAWAL_REQUEST}
-              element={<DashboardMain inner={<Withdrawal />} name="WITHDRAWAL_REPORT" />}
+              element={<DashboardMain inner={<Withdrawal />} name="WITHDRAWAL REQUEST" />}
             />
             <Route
               path={AuthenticatedRoutes.WITHDRAWAL_REPORT}
@@ -342,11 +344,20 @@ const Authenticate = () => {
               }
             />
             <Route
-              path={AuthenticatedRoutes.WITHDRAWAL_REPORT}
+              path={AuthenticatedRoutes.CREATE_INVESTMENT_FORM}
               element={
                 <DashboardMain
-                  inner={<WithdrawalReport />}
+                  inner={<InvestmentForm />}
                   name="Investment Form"
+                />
+              }
+            />
+             <Route
+              path={AuthenticatedRoutes.Investment_History}
+              element={
+                <DashboardMain
+                  inner={<InvestmentHistory />}
+                  name="Investment History"
                 />
               }
             />

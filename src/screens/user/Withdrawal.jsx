@@ -1,19 +1,15 @@
 import { useState } from "react";
-import { Button5 } from "../../components/ui/Buttons";
-import TextInput from "../../components/ui/TextInput";
 import { SwalError, SwalSuccess } from "../../utils/custom-alert";
 import PageLoader from "../../components/ui/PageLoader";
-// import { raiseWithdrawalRequest } from "../../api/payment-api";
 import { useSelector } from "react-redux";
 import { raiseWithdrawalRequest } from "../../api/user-api";
-import SelectInput from "../../components/ui/SelectInput";
 import { Wallet } from "lucide-react";
 
 const Withdrawal = () => {
   const [loading, setLoading] = useState(false);
   const userInfo = useSelector((state) => state.userInfo.userInfo);
   const [formData, setFormData] = useState({
-    wallet:"",
+    wallet: "",
     amount: "",
     bankDetails: {
       accountHolder: "",
@@ -23,7 +19,7 @@ const Withdrawal = () => {
       upiId: ""
     }
   });
-  
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name.startsWith("bank.")) {
@@ -68,7 +64,6 @@ const Withdrawal = () => {
         processedAt: null,
         reason: null,
         wallet: formData.wallet
-
       };
 
       const response = await raiseWithdrawalRequest(withdrawalData);
@@ -82,6 +77,7 @@ const Withdrawal = () => {
 
       // Reset form
       setFormData({
+        wallet: "",
         amount: "",
         bankDetails: {
           accountHolder: "",
@@ -105,107 +101,256 @@ const Withdrawal = () => {
     }
   };
 
-  const handleSelectChange = (e) => {
-    const { value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      wallet: value // Update wallet field in formData
-    }));
-  };
-
-  
-
-   const options = [
+  const walletOptions = [
     { value: "rupeeWallet", label: "Rupee Wallet" },
     { value: "eCoinWallet", label: "E-Coin Wallet" },
     { value: "investmentWallet", label: "Investment Wallet" }
   ];
 
   return (
-    <>
+    <div className="container mt-4" style={{ minHeight: '100vh' }}>
       {loading && <PageLoader />}
-      <div className="Withdrawal">
-        <div className="ss-card half martop">
-          <div className="top">
-            <h5 className="heading">
-              Main Wallet : ${userInfo?.user?.currentIncome?.toFixed(2)}
-            </h5>
+      <div className="row justify-content-center">
+        <div className="col-md-10">
+          <div className="card" style={{
+            backdropFilter: 'blur(20px)',
+            backgroundColor: 'rgba(255, 255, 255, 0.4)',
+            border: '1px solid rgba(255, 255, 255, 0.5)',
+            boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.25)',
+            borderRadius: '30px',
+            padding: '2rem'
+          }}>
+            <div className="card-header text-center mb-4" style={{
+              background: 'rgba(255, 255, 255, 0.3)',
+              borderBottom: '1px solid rgba(255, 255, 255, 0.5)',
+              borderRadius: '25px',
+              padding: '1.5rem'
+            }}>
+              <div className="d-flex align-items-center justify-content-center gap-3">
+                <Wallet size={32} color="#2d3748" />
+                <h2 className="mb-0" style={{
+                  color: '#2d3748',
+                  fontWeight: '800',
+                  textShadow: '0 2px 4px rgba(0,0,0,0.15)',
+                  fontSize: '2.2rem'
+                }}>Withdrawal Form</h2>
+              </div>
+              <div className="mt-3" style={{ color: '#4a5568', fontSize: '1.2rem' }}>
+                Available Balance: ${userInfo?.user?.currentIncome?.toFixed(2)}
+              </div>
+            </div>
+
+            <form onSubmit={handleSubmit}>
+              <div className="row">
+                {/* Wallet Selection */}
+                <div className="col-md-6 mb-4">
+                  <label className="form-label fw-semibold" style={{ fontSize: '1.1rem', color: '#4a5568' }}>
+                    Select Wallet
+                  </label>
+                  <select
+                    className="form-select form-select-lg"
+                    value={formData.wallet}
+                    onChange={(e) => setFormData(prev => ({ ...prev, wallet: e.target.value }))}
+                    required
+                    style={{
+                      borderRadius: '15px',
+                      border: '1px solid rgba(255, 255, 255, 0.5)',
+                      background: 'rgba(255, 255, 255, 0.5)',
+                      backdropFilter: 'blur(5px)',
+                      fontSize: '1.1rem',
+                      padding: '0.8rem 1rem'
+                    }}
+                  >
+                    <option value="">Select Wallet</option>
+                    {walletOptions.map(option => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Amount */}
+                <div className="col-md-6 mb-4">
+                  <label className="form-label fw-semibold" style={{ fontSize: '1.1rem', color: '#4a5568' }}>
+                    Withdrawal Amount
+                  </label>
+                  <div className="input-group">
+                    <span className="input-group-text" style={{
+                      borderRadius: '15px 0 0 15px',
+                      border: '1px solid rgba(255, 255, 255, 0.5)',
+                      background: 'rgba(255, 255, 255, 0.5)',
+                      backdropFilter: 'blur(5px)',
+                      fontSize: '1.1rem'
+                    }}>$</span>
+                    <input
+                      type="number"
+                      className="form-control form-control-lg"
+                      name="amount"
+                      value={formData.amount}
+                      onChange={handleChange}
+                      required
+                      placeholder="Enter amount"
+                      style={{
+                        borderRadius: '0 15px 15px 0',
+                        border: '1px solid rgba(255, 255, 255, 0.5)',
+                        background: 'rgba(255, 255, 255, 0.5)',
+                        backdropFilter: 'blur(5px)',
+                        fontSize: '1.1rem',
+                        padding: '0.8rem 1rem'
+                      }}
+                    />
+                  </div>
+                </div>
+
+                {/* Bank Details Section */}
+                <div className="col-12 mb-4">
+                  <h3 className="mb-3" style={{ color: '#2d3748', fontWeight: '600' }}>Bank Details</h3>
+                </div>
+
+                <div className="col-md-6 mb-4">
+                  <label className="form-label fw-semibold" style={{ fontSize: '1.1rem', color: '#4a5568' }}>
+                    Account Holder Name
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control form-control-lg"
+                    name="bank.accountHolder"
+                    value={formData.bankDetails.accountHolder}
+                    onChange={handleChange}
+                    required
+                    placeholder="Enter account holder name"
+                    style={{
+                      borderRadius: '15px',
+                      border: '1px solid rgba(255, 255, 255, 0.5)',
+                      background: 'rgba(255, 255, 255, 0.5)',
+                      backdropFilter: 'blur(5px)',
+                      fontSize: '1.1rem',
+                      padding: '0.8rem 1rem'
+                    }}
+                  />
+                </div>
+
+                <div className="col-md-6 mb-4">
+                  <label className="form-label fw-semibold" style={{ fontSize: '1.1rem', color: '#4a5568' }}>
+                    Account Number
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control form-control-lg"
+                    name="bank.accountNumber"
+                    value={formData.bankDetails.accountNumber}
+                    onChange={handleChange}
+                    required
+                    placeholder="Enter account number"
+                    style={{
+                      borderRadius: '15px',
+                      border: '1px solid rgba(255, 255, 255, 0.5)',
+                      background: 'rgba(255, 255, 255, 0.5)',
+                      backdropFilter: 'blur(5px)',
+                      fontSize: '1.1rem',
+                      padding: '0.8rem 1rem'
+                    }}
+                  />
+                </div>
+
+                <div className="col-md-6 mb-4">
+                  <label className="form-label fw-semibold" style={{ fontSize: '1.1rem', color: '#4a5568' }}>
+                    IFSC Code
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control form-control-lg"
+                    name="bank.ifscCode"
+                    value={formData.bankDetails.ifscCode}
+                    onChange={handleChange}
+                    required
+                    placeholder="Enter IFSC code"
+                    style={{
+                      borderRadius: '15px',
+                      border: '1px solid rgba(255, 255, 255, 0.5)',
+                      background: 'rgba(255, 255, 255, 0.5)',
+                      backdropFilter: 'blur(5px)',
+                      fontSize: '1.1rem',
+                      padding: '0.8rem 1rem'
+                    }}
+                  />
+                </div>
+
+                <div className="col-md-6 mb-4">
+                  <label className="form-label fw-semibold" style={{ fontSize: '1.1rem', color: '#4a5568' }}>
+                    Bank Name
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control form-control-lg"
+                    name="bank.bankName"
+                    value={formData.bankDetails.bankName}
+                    onChange={handleChange}
+                    required
+                    placeholder="Enter bank name"
+                    style={{
+                      borderRadius: '15px',
+                      border: '1px solid rgba(255, 255, 255, 0.5)',
+                      background: 'rgba(255, 255, 255, 0.5)',
+                      backdropFilter: 'blur(5px)',
+                      fontSize: '1.1rem',
+                      padding: '0.8rem 1rem'
+                    }}
+                  />
+                </div>
+
+                <div className="col-md-6 mb-4">
+                  <label className="form-label fw-semibold" style={{ fontSize: '1.1rem', color: '#4a5568' }}>
+                    UPI ID
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control form-control-lg"
+                    name="bank.upiId"
+                    value={formData.bankDetails.upiId}
+                    onChange={handleChange}
+                    required
+                    placeholder="Enter UPI ID"
+                    style={{
+                      borderRadius: '15px',
+                      border: '1px solid rgba(255, 255, 255, 0.5)',
+                      background: 'rgba(255, 255, 255, 0.5)',
+                      backdropFilter: 'blur(5px)',
+                      fontSize: '1.1rem',
+                      padding: '0.8rem 1rem'
+                    }}
+                  />
+                </div>
+
+                <div className="col-12 text-center mt-4">
+                  <button
+                    type="submit"
+                    className="btn btn-lg px-5"
+                    disabled={loading}
+                    style={{
+                      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                      border: 'none',
+                      borderRadius: '15px',
+                      color: 'white',
+                      fontSize: '1.2rem',
+                      fontWeight: '600',
+                      padding: '1rem 3rem',
+                      boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
+                      transition: 'all 0.3s ease',
+                      opacity: loading ? 0.7 : 1,
+                      cursor: loading ? 'not-allowed' : 'pointer'
+                    }}
+                  >
+                    {loading ? 'Processing...' : 'Submit Withdrawal'}
+                  </button>
+                </div>
+              </div>
+            </form>
           </div>
-          
-          <form onSubmit={handleSubmit}>
-            <div className="input-container">
-
-              <SelectInput
-                labelName={"Select Wallet"}
-                options={options}
-                value={formData.wallet}
-                onChange={handleSelectChange}
-
-                
-              />
-              <TextInput
-                onChange={handleChange}
-                placeholder="Enter Amount"
-                labelName="Amount"
-                name="amount"
-                value={formData.amount}
-                type="number"
-                required
-              />
-
-              <TextInput
-                onChange={handleChange}
-                placeholder="Enter Account Holder Name"
-                labelName="Account Holder Name"
-                name="bank.accountHolder"
-                value={formData.bankDetails.accountHolder}
-                required
-              />
-
-              <TextInput
-                onChange={handleChange}
-                placeholder="Enter Account Number"
-                labelName="Account Number"
-                name="bank.accountNumber"
-                value={formData.bankDetails.accountNumber}
-                required
-              />
-
-              <TextInput
-                onChange={handleChange}
-                placeholder="Enter IFSC Code"
-                labelName="IFSC Code"
-                name="bank.ifscCode"
-                value={formData.bankDetails.ifscCode}
-                required
-              />
-
-              <TextInput
-                onChange={handleChange}
-                placeholder="Enter Bank Name"
-                labelName="Bank Name"
-                name="bank.bankName"
-                value={formData.bankDetails.bankName}
-                required
-              />
-
-              <TextInput
-                onChange={handleChange}
-                placeholder="Enter UPI ID"
-                labelName="UPI ID"
-                name="bank.upiId"
-                value={formData.bankDetails.upiId}
-                required
-              />
-            </div>
-
-            <div className="btns">
-              <Button5 type="submit" name="Withdraw" />
-            </div>
-          </form>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -171,6 +171,22 @@ export async function approveFundRequest(id) {
   );
   return response;
 }
+
+
+export async function rejectFundRequest(id) {
+  const response = await axios.put(
+    `${adminApi}/update-investment-status/`,
+    { investmentId: id, status: "cancelled" },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      withCredentials: true,
+    }
+  );
+  return response;
+}
+
 export async function approveFundMultipleRequest(payload) {
   const response = await axios.post(
     `${adminApi}/transaction/details-many-accept`,
@@ -197,19 +213,19 @@ export async function rejectFundMultipleRequest(payload) {
   );
   return response;
 }
-export async function rejectFundRequest(id) {
-  const response = await axios.post(
-    `${adminApi}/transfer/amount-aproved/${id}`,
-    { status: "reject" },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      withCredentials: true,
-    }
-  );
-  return response;
-}
+// export async function rejectFundRequest(id) {
+//   const response = await axios.post(
+//     `${adminApi}/update-investment-status/`,
+//     { investmentId :id ,status: "cancelled" },
+//     {
+//       headers: {
+//         Authorization: `Bearer ${token}`,
+//       },
+//       withCredentials: true,
+//     }
+//   );
+//   return response;
+// }
 
 // export async function raiseWithdrawalRequest(payload) {
 //   const response = await axios.post(
